@@ -1,4 +1,9 @@
 import React, {useState} from "react";
+
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {TextField} from "@mui/material";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
@@ -7,29 +12,28 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Conditions from "./conditionsSelection";
 import Divider from '@mui/material/Divider';
-import axios from "axios";
-import {Link, useNavigate} from "react-router-dom";
 
 
 const Register = () => {
-    const [firstName, setFirstName] = useState();
-    const [lastName, setLastName] = useState();
-    const [dateOfBirth, setDateOfBirth] = useState("");
-    const [address, setAddress] = useState();
-    const [city, setCity] = useState();
-    const [zipCode, setZipCode] = useState();
-    const [landLine, setLandLine] = useState();
-    const [cellular, setCellular] = useState();
-    const [infected, setInfected] = useState(false);
+    const navigate = useNavigate();
+    const [CitizenFirstName, setFirstName] = useState('');
+    const [CitizenLastName, setLastName] = useState('');
+    const [CitizenDOB, setDateOfBirth] = useState('');
+    const [CitizenAddress, setAddress] = useState('');
+    const [CitizenCity, setCity] = useState('');
+    const [CitizenZipCode, setZipCode] = useState('');
+    const [CitizenLandLine, setLandLine] = useState('');
+    const [CitizenCellular, setCellular] = useState('');
+    const [CitizenInfected, setInfected] = useState(false);
     const [conditions, setCondition] = useState([]);
     const [submitedOnce, setSubmitedOnce] = useState(false);
     const [otherTextbox, setOtherTextbox] = useState(false);
     const [otherConditions, setOtherConditions] = useState('');
+    const [errorMessage, setError] = useState('');
 
-    const submitForm = e =>{
+    const submitForm = async(e) =>{
         e.preventDefault();
         setSubmitedOnce(true);
 
@@ -40,48 +44,81 @@ const Register = () => {
             if(otherConditions)
                 newConditions.push(otherConditions);
         }
+
+        let CitizenConditions = '';
+        newConditions.forEach(condition => CitizenConditions += `${condition} `);
+
+        const data = {
+            CitizenFirstName,
+            CitizenLastName,
+            CitizenDOB,
+            CitizenAddress,
+            CitizenCity,
+            CitizenZipCode,
+            CitizenCellular,
+            CitizenLandLine,
+            CitizenInfected,
+            CitizenConditions
+        }
+        try{
+            await axios.post('http://localhost:8000/register/',data);
+            navigate('/summary');
+        }
+        catch (error) {
+            setError(error.response.data.Error);
+        }
+
     }
 
+    // Changing the date into the right format.
     const handleDate = data => {
-        const DOB = `${data.getFullYear()}-${data.getUTCMonth()+1}-${data.getUTCDate()+1}`
-        setDateOfBirth(DOB);
+        if(data)
+        {
+            const DOB = `${data.getFullYear()}-${data.getUTCMonth()+1}-${data.getUTCDate()+1}`
+            setDateOfBirth(DOB);
+        }
     }
 
     return(
         <div>
+            <Button variant="contained" style={{right:'50px',position:'absolute'}}
+                    onClick={() => navigate('/summary')}>Summary Page</Button>
+
             <div className="d-flex justify-content-center mt-5">
                 <h1>Registration Form</h1>
             </div>
+
             <Divider variant="middle" width={400} className="mx-auto mt-2 mb-2" />
+
             <div className="d-flex justify-content-center">
                 <div>
                     <form onSubmit={submitForm}>
                         <div>
-                            <TextField error={!firstName && submitedOnce} className="mx-2 mt-3" id="filled-error"
+                            <TextField error={!CitizenFirstName && submitedOnce} className="mx-2 mt-3" id="filled-error"
                                        label="First name" variant="filled" onChange={e => setFirstName(e.target.value)} />
-                            <TextField error={!lastName && submitedOnce} className="mx-2 mt-3" id="filled-error"
+                            <TextField error={!CitizenLastName && submitedOnce} className="mx-2 mt-3" id="filled-error"
                                        label="Last name" variant="filled" onChange={e => setLastName(e.target.value)} />
                         </div>
                         <div>
-                            <TextField error={!city && submitedOnce} className="mx-2 mt-3" id="filled-error"
+                            <TextField error={!CitizenCity && submitedOnce} className="mx-2 mt-3" id="filled-error"
                                        label="City" variant="filled" onChange={e => setCity(e.target.value)} />
-                            <TextField error={!zipCode && submitedOnce} className="mx-2 mt-3" id="filled-error"
+                            <TextField error={!CitizenZipCode && submitedOnce} className="mx-2 mt-3" id="filled-error"
                                        label="Zip code" variant="filled" onChange={e => setZipCode(e.target.value)} />
                         </div>
                         <div>
-                            <TextField error={!landLine && submitedOnce} className="mx-2 mt-3" id="filled-error"
+                            <TextField error={!CitizenLandLine && submitedOnce} className="mx-2 mt-3" id="filled-error"
                                        label="Land line" variant="filled" onChange={e => setLandLine(e.target.value)} />
-                            <TextField error={!cellular && submitedOnce} className="mx-2 mt-3" id="filled-error"
+                            <TextField error={!CitizenCellular && submitedOnce} className="mx-2 mt-3" id="filled-error"
                                        label="Cellular phone" variant="filled" onChange={e => setCellular(e.target.value)} />
                         </div>
                         <div>
-                            <TextField error={!address && submitedOnce} className="mx-2 mt-3" id="filled-error"
+                            <TextField error={!CitizenAddress && submitedOnce} className="mx-2 mt-3" id="filled-error"
                                        label="Address" variant="filled" onChange={e => setAddress(e.target.value)} />
                         </div>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Date of birth"
-                                value={dateOfBirth}
+                                value={CitizenDOB}
                                 inputFormat="dd/MM/yyyy"
                                 onChange={(newValue) => {
                                     handleDate(newValue);
@@ -90,13 +127,14 @@ const Register = () => {
                             />
                         </LocalizationProvider>
                         <div className="mx-2 mb-2">
-                            <FormControlLabel control={<Checkbox onChange={()=>setInfected(!infected)}/>}
+                            <FormControlLabel control={<Checkbox onChange={()=>setInfected(!CitizenInfected)}/>}
                                               label="I have had COVID-19 before"/>
                         </div >
 
                         <Conditions setter={setCondition} setOther={setOtherTextbox}/>
+
                         <div>
-                            <TextField hidden={!otherTextbox} error={!address && submitedOnce} className="mx-2 mt-3" id="filled-error"
+                            <TextField hidden={!otherTextbox} error={!otherConditions && submitedOnce} className="mx-2 mt-3" id="filled-error"
                                        label="Add conditions" variant="filled" onChange={e => setOtherConditions(e.target.value)} />
                         </div>
 
@@ -106,6 +144,9 @@ const Register = () => {
                             </Button>
                         </div>
                     </form>
+                    <div>
+                        <p className="text-center mx-auto w-75 mt-4" style={{color: "red"}}>{errorMessage}</p>
+                    </div>
                 </div>
             </div>
         </div>

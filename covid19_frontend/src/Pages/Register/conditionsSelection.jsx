@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -6,7 +7,6 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
-import {useEffect} from "react";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -30,13 +30,8 @@ const Conditions = props => {
     const [condition, setCondition] = React.useState([]);
 
     const handleChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        setCondition(
-            // On autofill we get a stringified value.
-            typeof value === 'string' ? value.split(',') : value,
-        );
+        const {target: { value },} = event;
+        setCondition(typeof value === 'string' ? value.split(',') : value,);
 
         if (value.indexOf('Other') >= 0)
             props.setOther(true);
