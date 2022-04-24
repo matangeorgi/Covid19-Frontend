@@ -43,7 +43,6 @@ const Conditions = props => {
                     onChange={handleChange}
                     input={<OutlinedInput label="Conditions" />}
                     renderValue={(selected) => selected.join(', ')}
-                    //MenuProps={MenuProps}
                 >
                     {names.map((name) => (
                         <MenuItem key={name} value={name}>
