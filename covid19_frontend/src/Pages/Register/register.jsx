@@ -65,9 +65,11 @@ const Register = () => {
             navigate('/summary');
         }
         catch (error) {
-            setError(error.response.data.Error);
+            if(typeof error.response === 'undefined')
+                setError("There is a connection problem with the server, please try again later.")
+            else
+                setError(error.response.data.Error);
         }
-
     }
 
     // Changing the date into the right format.
@@ -137,16 +139,15 @@ const Register = () => {
                             <TextField hidden={!otherTextbox} error={!otherConditions && submitedOnce} className="mx-2 mt-3" id="filled-error"
                                        label="Add conditions" variant="filled" onChange={e => setOtherConditions(e.target.value)} />
                         </div>
-
-                        <div className="d-flex justify-content-center mt-3">
+                        <div>
+                            <p className="text-center mx-auto w-75 mt-4 text-danger">{errorMessage}</p>
+                        </div>
+                        <div className="d-flex justify-content-center mt-3 mb-3">
                             <Button type="submit" variant="contained" endIcon={<SendIcon />}>
                                 Send
                             </Button>
                         </div>
                     </form>
-                    <div>
-                        <p className="text-center mx-auto w-75 mt-4" style={{color: "red"}}>{errorMessage}</p>
-                    </div>
                 </div>
             </div>
         </div>

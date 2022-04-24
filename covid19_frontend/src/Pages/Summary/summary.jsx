@@ -26,13 +26,13 @@ const Summary = () => {
 
     // Getting the info from the server once when we load the page.
     useEffect(async() => {
-        const response = await axios.get('http://localhost:8000/summary/getData')
-        setRows(response.data);
+        try{
+            const response = await axios.get('http://localhost:8000/summary/getData')
+            setRows(response.data);
+        }catch{
+            setError("There is a connection problem with the server, please try again later.")
+        }
     },[])
-
-    const ExportData = async() => {
-        await axios.get('http://localhost:8000/summary/exportExcel')
-    }
 
     const submitForm = async(e) => {
         e.preventDefault();
@@ -43,12 +43,14 @@ const Summary = () => {
                 const response = await axios.get(
                     `http://localhost:8000/summary/getData/?city=${city}&first=${startDate}&second=${endDate}`)
                 setRows(response.data);
+                setError('');
             }
             else if(startDate && endDate)
             {
                 const response = await axios.get(
                     `http://localhost:8000/summary/getData/?first=${startDate}&second=${endDate}`)
                 setRows(response.data);
+                setError('');
             }
             else if(startDate || endDate)
                 setError("Fill both of the dates input.");
@@ -59,18 +61,21 @@ const Summary = () => {
                     `http://localhost:8000/summary/getData/?city=${city}`
                 )
                 setRows(response.data);
+                setError('');
             }
             else
             {
                 const response = await axios.get('http://localhost:8000/summary/getData')
                 setRows(response.data);
+                setError('');
             }
-            setError('');
         }
         catch (error) {
-            setError(error.response.data.Error);
+            if(typeof error.response === 'undefined')
+                setError("There is a connection problem with the server, please try again later.")
+            else
+                setError(error.response.data.Error);
         }
-
     }
 
     return(
@@ -97,7 +102,7 @@ const Summary = () => {
 
                 </form>
                 <div>
-                    <p className="text-center mx-auto w-75 mt-4" style={{color: "red"}}>{errorMessage}</p>
+                    <p className="text-center mx-auto w-75 mt-4 text-danger">{errorMessage}</p>
                 </div>
             </div>
 

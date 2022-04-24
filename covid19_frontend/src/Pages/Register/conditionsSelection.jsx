@@ -8,17 +8,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
-};
-
 const names = [
     'Diabetes',
     'Cardio-Vascular problems',
@@ -54,7 +43,7 @@ const Conditions = props => {
                     onChange={handleChange}
                     input={<OutlinedInput label="Conditions" />}
                     renderValue={(selected) => selected.join(', ')}
-                    MenuProps={MenuProps}
+                    //MenuProps={MenuProps}
                 >
                     {names.map((name) => (
                         <MenuItem key={name} value={name}>
