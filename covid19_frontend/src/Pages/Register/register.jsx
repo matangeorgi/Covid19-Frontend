@@ -11,9 +11,10 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
 import Conditions from "./conditionsSelection";
 import Divider from '@mui/material/Divider';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 const Register = () => {
@@ -76,7 +77,7 @@ const Register = () => {
     const handleDate = data => {
         if(data)
         {
-            const DOB = `${data.getFullYear()}-${data.getUTCMonth()+1}-${data.getUTCDate()+1}`
+            const DOB = `${data.getFullYear()}-${data.getMonth()+1}-${data.getDate()}`
             setDateOfBirth(DOB);
         }
     }
@@ -117,18 +118,17 @@ const Register = () => {
                             <TextField error={!CitizenAddress && submitedOnce} className="mx-2 mt-3" id="filled-error"
                                        label="Address" variant="filled" onChange={e => setAddress(e.target.value)} />
                         </div>
+
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
-                                label="Date of birth"
-                                value={CitizenDOB}
+                                className="mx-2 mt-3 rounded"
+                                value={CitizenDOB || "Date of birth"}
                                 inputFormat="dd/MM/yyyy"
-                                onChange={(newValue) => {
-                                    handleDate(newValue);
-                                }}
-                                renderInput={(params) => <TextField className="mx-2 mt-3 mb-3" {...params} />}
+                                onChange={(newValue) => {handleDate(newValue)}}
                             />
                         </LocalizationProvider>
-                        <div className="mx-2 mb-2">
+
+                    <div className="mx-2 mb-2">
                             <FormControlLabel control={<Checkbox onChange={()=>setInfected(!CitizenInfected)}/>}
                                               label="I have had COVID-19 before"/>
                         </div >
