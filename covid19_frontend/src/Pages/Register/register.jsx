@@ -73,7 +73,7 @@ const Register = () => {
         }
     }
 
-    // Changing the date into the right format.
+    // Changing the date into the right format
     const handleDate = data => {
         if(data)
         {
