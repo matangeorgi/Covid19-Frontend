@@ -1,0 +1,59 @@
+Covid19 – Ex 2
+
+Matan Georgi
+
+The task given to me was to help undeveloped countries to vaccinate their people by building a full stack project that
+will collect data from the citizens in order to prioritize Covid-19 vaccination.
+The website has 2 pages, one to register the citizens and another one to show the summary of registered citizens. 
+The project was build using React for front-end server, Django for back-end server and postgres as the database.
+In this form I'll explain the journey I had gaining the knowledge and what were the resources I've used to overcome obstacles
+and learn the new technologies.
+
+
+React.js:
+I've learned a lot about react throughout this year, my final project is a website that is kind of a social media and
+I'm in charge of the front-end of the project which I have chose to develop using react.
+I've learned react from many resources for this project, most of the materials are videos from YouTube:
+•	https://www.youtube.com/watch?v=LlvBzyy-558
+•	https://www.youtube.com/watch?v=02zO0hZmwnw
+•	https://www.youtube.com/watch?v=12l6lkW6JhE
+
+And probably many more which I don’t remember, but the basic of react I learned from Biran Holt at
+FrontendMasters(https://frontendmasters.com/courses/complete-react-v6/), I have finished his course and gained a lot of knowledge.
+Although I have known react better than the other technologies, at this project I have learned also about a new library called
+Material ui that doesn't help with anything practically but does great work with the design of the page. The learning of this library
+was quite easy and I have just looked at code examples at their website documentation.
+In react there are quite a lot of installations so I'll try to cover the important ones:
+The setup of the server included:
+npm install react
+npm install react-router-dom
+npm install create-react-app
+later on I have had to install all the things necessary to material-ui and also axios:
+npm install axios
+npm install @mui/etc…
+lastly the server runs by typing "npm run" at the terminal of the folder.
+
+PostgreSQL:
+As I mentioned before my final project, although I was not assigned to the back-end or the database I still learned
+some basic postgres with a YouTube playlist(https://www.youtube.com/playlist?list=PLwvrYc43l1MxAEOI_KwGe8l42uJxMoKeS)
+that I haven't watched thoroughly but I have covered the most of it, so I already were familiar with the database and pgAdmin and Psql.
+
+All I have left to learn is how to communicate with Django from the back-end, and that is next.
+For the usage of postgres I have downloaded pgAdmin4 and Psql.
+
+Django:
+Although I've learned a lot of python, by myself and from the degree, Django is the only technology I haven't touched at my life so I had to start from the beginning with a crash course and later on to more specific subjects:
+•	https://www.youtube.com/watch?v=rHux0gMZ3Eg
+•	https://www.youtube.com/watch?v=Pwwz4_AvHDU
+•	https://www.youtube.com/watch?v=cJveiktaOSQ
+•	https://www.youtube.com/watch?v=rmVHOg7fj7E
+•	https://stackoverflow.com/questions/150505/capturing-url-parameters-in-request-get
+
+And lastly because I had a problem to access from my front-end server I learned from this video how to fix it.
+When I started the server I wrote Django-admin startproject <name>.
+Of course, I had to install Django, and in order to run the server we should type in the terminal of the folder "python manage.py runserver".
+
+That’s it about the journey of learning to this exercise, here is my git repo:
+•	https://github.com/matangeorgi/Covid19-Frontend
+•	https://github.com/matangeorgi/Covid19-Backend
+
