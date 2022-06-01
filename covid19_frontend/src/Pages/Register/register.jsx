@@ -105,7 +105,7 @@ const Register = () => {
                         <div>
                             <TextField error={!CitizenCity && submitedOnce} className="mx-2 mt-3" id="filled-error"
                                        label="City" variant="filled" onChange={e => setCity(e.target.value)} />
-                            <TextField error={!CitizenZipCode && submitedOnce} className="mx-2 mt-3" id="filled-error"
+                            <TextField className="mx-2 mt-3" id="filled"
                                        label="Zip code" variant="filled" onChange={e => setZipCode(e.target.value)} />
                         </div>
                         <div>
